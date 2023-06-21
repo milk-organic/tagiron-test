@@ -34,17 +34,27 @@ function determineQuestion(cardsArray, questionsIndexArray) {
 	// Note: Number('') returns 0.
 	if (select.value !== '') {
 		let questionIndex = Number(select.value);
-		document.getElementById('selected-question').textContent = getResponseOfQuestion(cardsArray, questionIndex);
+		let selectedQuestion = getResponseOfQuestion(cardsArray, questionIndex);
+		document.getElementById('selected-question').textContent = selectedQuestion;
 		// console.log('questionIndex(remove):', questionsIndexArray.indexOf(questionIndex));
 		select.remove(questionsIndexArray.indexOf(questionIndex)+1); // value="questionIndex"のselect要素を削除
 
 		// Delete the index number of the selected question from "questionsIndexArray (it contains the index numbers of the questions.)"
 		deleteIndexFromQuestionIndexArray(questionsIndexArray, questionIndex);
 		select.value = ""; //選択値を「--質問を選択してください--」に指定
+  createPElementForRecoedingLogs(selectedQuestion);
 
 	} else {
 		document.getElementById('selected-question').textContent = '';
 	}
+}
+
+function createPElementForRecoedingLogs(log){
+	// Create all selects of the questions.
+	let div = document.getElementById('display-log');
+	let newPElement = document.createElement("p");
+	newPElement.textContent = log;
+	div.appendChild(newPElement);
 }
 
 function stopGame(cardsArray, questionsIndexArray) {
